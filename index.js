@@ -17,6 +17,7 @@ var page = 0;
 var max = 115;
 let insertTime = 0;
 
+
 //获取所有带访问链接
 var urlList = [];
 for (var i = 1; i <= max; i++) {
