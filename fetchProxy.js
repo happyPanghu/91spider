@@ -3,8 +3,6 @@ var iconv = require('iconv-lite');
 var Promise = require("bluebird");
 const cheerio = require("cheerio");
 
-let arr = [];
-
 function getProxyList() {
     var apiURL = 'http://www.66ip.cn/areaindex_1/1.html';
 
@@ -33,9 +31,10 @@ function getProxyList() {
                 var $ = cheerio.load(response.body);
                 var ret = [];
                 $("#footer table tr").each(function() {
-                    ret.push($(this).find("td").eq(0).text().trim());
+                    var $fa=$(this).find("td");                    
+                    ret.push({'ip':$fa.eq(0).text().trim(),'port':$fa.eq(1).text().trim()});
                 })
-                arr = ret;
+                ret.shift();
                 resolve(ret);
 
             } catch (e) {
