@@ -4,10 +4,10 @@ const async = require("async");
 var mysql = require('mysql');
 //创建数据库连接
 var connection = mysql.createConnection({
-    host: 'localhost',
+    host: '10.1.200.148',
     user: 'root',
     password: 'root',
-    database: '91db'
+    database: 'test'
 });
 connection.connect();
 
@@ -59,7 +59,7 @@ function visit(url, callback) {
                 var vUrl=$("source").attr("src");
                 var vName=$("#viewvideo-title").text().trim();
 				console.log(vUrl,vName);
-                connection.query('INSERT INTO video(url,name) VALUES(?,?)', [vUrl, vName], function(err, result) {                    
+                connection.query('INSERT INTO video(url,name) VALUES(?,?)', [vUrl, vName], function(err, result) {
                     if (err) {
                         console.log('[INSERT ERROR] - ', err.message);
                         return;
@@ -68,7 +68,7 @@ function visit(url, callback) {
                     }
                    callback();
                 });
-            }            
+            }
         })
     }
 

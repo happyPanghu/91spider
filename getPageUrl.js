@@ -4,10 +4,10 @@ const async = require("async");
 var mysql = require('mysql');
 //创建数据库连接
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: '91db'
+  host: '10.1.200.148',
+  user: 'root',
+  password: 'root',
+  database: 'test'
 });
 connection.connect();
 
@@ -20,13 +20,13 @@ let insertTime = 0;
 //获取所有带访问链接
 var urlList = [];
 for (var i = 1; i <= max; i++) {
-    urlList.push('http://91.91p09.space/video.php?category=rf&page=' + i);
+    urlList.push('https://92.91p22.space/video.php?category=rf&page=' + i);
 }
 console.log('=========' + urlList.length + '============');
 
 
 //控制请求发送
-async.mapLimit(urlList, 12, function(url, callback) {
+async.mapLimit(urlList, 2, function(url, callback) {
     fetchUrl(url, callback);
 }, function(err, res) {
     console.log(res + "=========返回结果");
@@ -45,7 +45,7 @@ function fetchUrl(url, callback) {
             $('#fullbox-content .listchannel').each(function(index, element) {
                 console.log("****************************");
                 var aUrl = $(this).find("a").eq(0).attr("href");
-                var aName = $(element).find("a").find("span").text();                
+                var aName = $(element).find("a").find("span").text();
                 connection.query('INSERT INTO url(url,name) VALUES(?,?)', [aUrl, aName], function(err, result) {
                     insertTime++;
                     if (err) {
@@ -54,10 +54,10 @@ function fetchUrl(url, callback) {
                     } else {
                         console.log('--------------------------INSERT----------------------------' + insertTime);
                     }
-                    
+
                 });
-            }) 
-            callback(null, url);           
+            })
+            callback(null, url);
         }
     })
 }
